@@ -1,0 +1,52 @@
+###
+
+GET http://localhost:5000/api/users http/1.1
+
+###
+
+GET http://localhost:5000/api/users/2 http/1.1
+
+###
+
+GET http://localhost:5000/api/users/sa/sa http/1.1
+
+###
+
+POST http://localhost:5000/api/users http/1.1
+content-type: application/json
+
+{
+    "id": 0,
+    "username": "xx",
+    "password": "xx",
+    "firstname": "Normal",
+    "lastname": "User",
+    "phone": "211",
+    "email": "help@user.com",
+    "isReviewer": false,
+    "isAdmin": false
+}
+
+###
+
+PUT http://localhost:5000/api/users/4 http/1.1
+content-type: application/json
+
+{
+    "id": 4,
+    "username": "xx",
+    "password": "xx",
+    "firstname": "Normal",
+    "lastname": "User",
+    "phone": "211",
+    "email": "help@user.com",
+    "isReviewer": false,
+    "isAdmin": false
+}
+
+###
+
+DELETE http://localhost:5000/api/users/4 http/1.1
+
+###
+
