@@ -20,6 +20,22 @@ namespace prs_server_net5.Controllers
             _context = context;
         }
 
+        // GET: api/vendors/po/5
+        [HttpGet("po/{vendorId}")]
+        public async Task<ActionResult<Vendor>> GetPo(int vendorId) {
+            var lines = from v in _context.Vendors
+                               join p in _context.Products
+                                on v.Id equals p.VendorId
+                               join l in _context.Requestlines
+                                on p.Id equals l.ProductId
+                               join r in _context.Requests
+                                on l.RequestId equals r.Id
+                               where v.Id == vendorId
+                               select l;
+            var requestlines = await lines.ToListAsync();
+            return new Vendor();
+        }
+
         // GET: api/Vendors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Vendor>>> GetVendors()
