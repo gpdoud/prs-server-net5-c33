@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace prs_server_net5.Models {
 
@@ -20,7 +21,7 @@ namespace prs_server_net5.Models {
 		public string Email { get; set; }
 		public bool IsReviewer { get; set; }
 		public bool IsAdmin { get; set; }
-
+		[JsonIgnore]
 		public virtual ICollection<Request> Requests { get; set; }
 
 		public User() { }

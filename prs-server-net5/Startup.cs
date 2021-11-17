@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace prs_server_net5 {
@@ -25,8 +26,13 @@ namespace prs_server_net5 {
 
 			services.AddControllers();
 
+			var connStrKey = "PrsDbContextWinhost";
+#if DEBUG
+			connStrKey = "PrsDbContext";
+#endif
+
 			services.AddDbContext<PrsDbContext>(x => {
-				x.UseSqlServer(Configuration.GetConnectionString("PrsDbContext"));
+				x.UseSqlServer(Configuration.GetConnectionString(connStrKey));
 			});
 
 			services.AddCors();
@@ -47,6 +53,11 @@ namespace prs_server_net5 {
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllers();
 			});
+
+			using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
+				scope.ServiceProvider.GetService<PrsDbContext>().Database.Migrate();
+			}
+
 		}
 	}
 }
