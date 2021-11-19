@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace prs_server_net5 {
@@ -24,9 +25,16 @@ namespace prs_server_net5 {
 		public void ConfigureServices(IServiceCollection services) {
 
 			services.AddControllers();
+#if MAC
+			// TEST
+#endif
+			var connStrKey = "PrsDbContext";
+			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
+				connStrKey = $"{connStrKey}Mac";
+            }
 
 			services.AddDbContext<PrsDbContext>(x => {
-				x.UseSqlServer(Configuration.GetConnectionString("PrsDbContext"));
+				x.UseSqlServer(Configuration.GetConnectionString(connStrKey));
 			});
 
 			services.AddCors();
