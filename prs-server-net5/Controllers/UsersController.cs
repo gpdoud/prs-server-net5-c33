@@ -44,6 +44,11 @@ namespace prs_server_net5.Controllers {
 			return user;
 		}
 
+		[HttpPost("update/{id}")]
+		public async Task<IActionResult> UpdateUser(int id, User user) {
+			return await PutUser(id, user);
+		}
+
 		// PUT: api/Users/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
@@ -75,6 +80,11 @@ namespace prs_server_net5.Controllers {
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction("GetUser", new { id = user.Id }, user);
+		}
+
+		[HttpPost("delete/{id}")]
+		public async Task<IActionResult> RemoveUser(int id) {
+			return await DeleteUser(id);
 		}
 
 		// DELETE: api/Users/5

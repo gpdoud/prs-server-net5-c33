@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace prs_server_net5.Models {
 
@@ -20,7 +21,7 @@ namespace prs_server_net5.Models {
 
 		public int VendorId { get; set; }
 		public virtual Vendor Vendor { get; set; }
-
+		[JsonIgnore]
 		public virtual ICollection<Requestline> Requestlines { get; set; }
 
 		public Product() { }

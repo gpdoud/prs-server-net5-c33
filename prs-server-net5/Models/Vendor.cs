@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace prs_server_net5.Models {
 
@@ -22,7 +23,7 @@ namespace prs_server_net5.Models {
 		public string Phone { get; set; }
 		[StringLength(255)]
 		public string Email { get; set; }
-
+		[JsonIgnore]
 		public virtual ICollection<Product> Products { get; set; }
 
 		public Vendor() { }

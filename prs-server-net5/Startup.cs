@@ -10,7 +10,11 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
 using System.Runtime.InteropServices;
+=======
+using System.Security.Cryptography;
+>>>>>>> dad967907552c9bb065f033533dadf4156611b05
 using System.Threading.Tasks;
 
 namespace prs_server_net5 {
@@ -25,13 +29,14 @@ namespace prs_server_net5 {
 		public void ConfigureServices(IServiceCollection services) {
 
 			services.AddControllers();
-#if MAC
-			// TEST
-#endif
-			var connStrKey = "PrsDbContext";
+
+			var connStrKey = "PrsDbContextWinhost"; // Winhost
+#if DEBUG
+			connStrKey = "PrsDbContext"; // Windows Dev
 			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				connStrKey = $"{connStrKey}Mac";
+				connStrKey = $"{connStrKey}Mac"; // MAC Dev (Docker)
             }
+#endif
 
 			services.AddDbContext<PrsDbContext>(x => {
 				x.UseSqlServer(Configuration.GetConnectionString(connStrKey));
@@ -55,6 +60,11 @@ namespace prs_server_net5 {
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllers();
 			});
+
+			using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
+				scope.ServiceProvider.GetService<PrsDbContext>().Database.Migrate();
+			}
+
 		}
 	}
 }
