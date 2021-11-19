@@ -31,6 +31,8 @@ namespace prs_server_net5.Controllers {
 							 select new {
 								 LineTotal = rl.Quantity * p.Price
 							 }).Sum(x => x.LineTotal);
+
+			request.Status = "EDIT";
 			await _context.SaveChangesAsync();
 			return Ok();
 		}

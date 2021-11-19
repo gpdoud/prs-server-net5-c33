@@ -10,11 +10,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-<<<<<<< HEAD
 using System.Runtime.InteropServices;
-=======
 using System.Security.Cryptography;
->>>>>>> dad967907552c9bb065f033533dadf4156611b05
 using System.Threading.Tasks;
 
 namespace prs_server_net5 {
