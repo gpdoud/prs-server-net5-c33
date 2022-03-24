@@ -33,6 +33,7 @@ namespace prs_server_net5.Controllers {
 							 }).Sum(x => x.LineTotal);
 
 			request.Status = "EDIT";
+			request.RejectionReason = null;
 			await _context.SaveChangesAsync();
 			return Ok();
 		}
